@@ -14,6 +14,9 @@
 (linum-mode)
 (linum-relative-global-mode)
 
+;; And display the actual line number in the middle
+(setq linum-relative-current-symbol "")
+
 ;; Remap ; to : and vice versa
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
