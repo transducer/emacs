@@ -11,21 +11,16 @@
 (require 'quack)
 
 ;; Make linums relative by default
-(global-linum-mode)
+(linum-mode)
+(linum-relative-global-mode)
 
 ;; Remap ; to : and vice versa
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(inhibit-startup-screen t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; surround.vim stuff
+(require 'evil-surround)
+(global-evil-surround-mode 1)
+
+(custom-set-variables '(inhibit-startup-screen t))
+(custom-set-faces)
