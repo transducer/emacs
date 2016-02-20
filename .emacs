@@ -29,6 +29,8 @@
 (powerline-evil-vim-color-theme)
 (display-time-mode t)
 
+;; Spaces for tabs
+(setq-default tab-width 4 indent-tabs-mode nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
