@@ -1,13 +1,0 @@
-;;; relative-line-numbers-autoloads.el --- automatically extracted autoloads
-;;
-;;; Code:
-
-
-(provide 'relative-line-numbers-autoloads)
-;; Local Variables:
-;; version-control: never
-;; no-byte-compile: t
-;; no-update-autoloads: t
-;; coding: utf-8
-;; End:
-;;; relative-line-numbers-autoloads.el ends here
