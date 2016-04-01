@@ -146,6 +146,12 @@
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
 
+;; Change paredit slurping and barfing to be on homerow
+(define-key evil-normal-state-map (kbd "C-.") 'paredit-forward-slurp-sexp) 
+(define-key evil-normal-state-map (kbd "C-,") 'paredit-forward-barf-sexp)
+(define-key evil-normal-state-map (kbd "C-<") 'paredit-backward-slurp-sexp) 
+(define-key evil-normal-state-map (kbd "C->") 'paredit-backward-barf-sexp)
+
 ;; surround.vim stuff
 (require 'evil-surround)
 (global-evil-surround-mode 1)
