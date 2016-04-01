@@ -135,7 +135,11 @@
 (require 'evil)
   (evil-mode 1)
 
-;; Display the actual line number in the middle
+;;; Make linums relative by default
+(linum-mode)
+(linum-relative-global-mode)
+
+; Display the actual line number in the middle
 (setq linum-relative-current-symbol "")
 
 ;; Remap ; to : and vice versa
@@ -153,3 +157,5 @@
 ;; Spaces for tabs
 (setq-default tab-width 4 indent-tabs-mode nil)
 
+;; Automatic indentation
+(electric-indent-mode 1) 
