@@ -135,18 +135,22 @@
 (require 'evil)
   (evil-mode 1)
 
-;;; Make linums relative by default
+;; Make linums relative by default
 (linum-mode)
 (linum-relative-global-mode)
 
-; Display the actual line number in the middle
+;; Hide buttons and menu
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+;; Display the actual line number in the middle
 (setq linum-relative-current-symbol "")
 
 ;; Remap ; to : and vice versa
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
 
-;; Change paredit slurping and barfing to be on homerow
+;; Change paredit slurping and barfing to be on home row
 (define-key evil-normal-state-map (kbd "C-.") 'paredit-forward-slurp-sexp) 
 (define-key evil-normal-state-map (kbd "C-,") 'paredit-forward-barf-sexp)
 (define-key evil-normal-state-map (kbd "C-<") 'paredit-backward-slurp-sexp) 
