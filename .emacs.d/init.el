@@ -65,6 +65,9 @@
     ;; edit html tags like sexps
     tagedit
 
+    ;; vi emulation layer
+    evil
+
     ;; git integration
     magit))
 

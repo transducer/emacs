@@ -10,10 +10,16 @@
 ;; Show line numbers
 (global-linum-mode)
 
-;; You can uncomment this to remove the graphical toolbar at the top. After
-;; awhile, you won't need the toolbar.
-;; (when (fboundp 'tool-bar-mode)
-;;   (tool-bar-mode -1))
+;; Make linums relative by default
+(linum-mode)
+(linum-relative-global-mode)
+
+;; Display the actual line number in the middle
+(setq linum-relative-current-symbol "")
+
+;; Remove toolbar
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
 
 ;; Don't show native OS scroll bars for buffers because they're redundant
 (when (fboundp 'scroll-bar-mode)

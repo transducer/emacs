@@ -70,3 +70,6 @@
     (quit nil)))
 
 (setq electric-indent-mode nil)
+
+;; Automatic indentation
+(electric-indent-mode 1) 
