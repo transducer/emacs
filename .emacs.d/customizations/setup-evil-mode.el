@@ -39,3 +39,6 @@
 ;; Automatic indentation
 (electric-indent-mode 1) 
 
+;; Bind CTRL-B to displaying buffers
+(evil-ex-define-cmd "buffers" 'buffer-menu)
+(define-key evil-normal-state-map (kbd "C-B") #'buffer-menu)
