@@ -6,11 +6,12 @@ The configuration is extended from
 ## Installation (Linux Mint)
 
     sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
-
     sudo add-apt-repository ppa:ubuntu-elisp/ppa
     sudo apt-get update
     sudo apt-get install emacs-snapshot emacs-snapshot-el
     git clone git@github.com:erooijak/emacs.git
+    cp emacs/.emacs.d/ ~/
+    emacs &
 
 ## Organization
 
