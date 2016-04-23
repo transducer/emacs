@@ -46,6 +46,9 @@
     ;; https://github.com/clojure-emacs/cider
     cider
 
+    ;; rainbow delimiters
+    rainbow-delimiters 
+
     ;; allow ido usage in as many contexts as possible. see
     ;; customizations/navigation.el line 23 for a description
     ;; of ido
@@ -64,6 +67,9 @@
 
     ;; edit html tags like sexps
     tagedit
+
+    ;; relative line numbers
+    linum-relative
 
     ;; vi emulation layer
     evil

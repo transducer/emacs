@@ -6,3 +6,4 @@
 .emacs.d/archives/**
 .emacs.d/elpa/archives/
 .emacs.d/session*
+.emacs./elpa
