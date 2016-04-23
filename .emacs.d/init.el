@@ -74,6 +74,9 @@
     ;; vi emulation layer
     evil
 
+    ;; surround stuff (vim-surround for evil)
+    evil-surround
+
     ;; git integration
     magit
 
