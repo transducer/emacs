@@ -69,7 +69,10 @@
     evil
 
     ;; git integration
-    magit))
+    magit
+
+    ;; NERD tree like display of directory structure
+    neotree))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -134,5 +137,8 @@
 (load "setup-clojure.el")
 (load "setup-js.el")
 
-;; Evil-mode configuration
+;; NeoTree NERD tree
+(load "setup-nerd-tree.el")
+
+;; Evil-mode configuration (run last since it sets key-bindings)
 (load "setup-evil-mode.el")
