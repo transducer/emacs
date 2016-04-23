@@ -10,7 +10,7 @@ The configuration is extended from
     sudo apt-get update
     sudo apt-get install emacs-snapshot emacs-snapshot-el
     git clone git@github.com:erooijak/emacs.git
-    cp emacs/.emacs.d/ ~/
+    cp -rf emacs/.emacs.d/ ~/
     emacs &
 
 ## Organization
