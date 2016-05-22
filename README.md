@@ -13,6 +13,13 @@ The configuration is extended from
     cp -rf emacs/.emacs.d/ ~/
     emacs &
 
+## Installation (Mac)
+
+    brew install emacs --with-cocoa --with-gnutls
+    git clone git@github.com:erooijak/emacs.git
+    cp -rf emacs/.emacs.d/ ~/
+    emacs &
+
 ## Organization
 
 I've tried to separate everything logically and document the purpose
