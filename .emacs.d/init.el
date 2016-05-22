@@ -145,6 +145,7 @@
 ;; Language-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
+(load "setup-octave.el")
 
 ;; NeoTree NERD tree
 (load "setup-nerd-tree.el")
