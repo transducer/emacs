@@ -7,3 +7,9 @@
 .emacs.d/elpa/archives/
 .emacs.d/session*
 .emacs./elpa
+.emacs.d/ac-comphist.dat
+.emacs.d/.recentf*
+.emacs.d/.smex*
+
+TAGS
+*.swp
