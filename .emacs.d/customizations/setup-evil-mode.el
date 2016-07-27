@@ -52,4 +52,3 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Bind o to neotree-enter
 (define-key neotree-mode-map (kbd "o") 'neotree-enter)
-

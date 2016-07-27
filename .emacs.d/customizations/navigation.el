@@ -58,4 +58,4 @@
 (global-set-key (kbd "M-x") 'smex)
 
 ;; projectile everywhere!
-(projectile-global-mode)
+;; (projectile-global-mode) // temporarily disable because of bug

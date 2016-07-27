@@ -4,12 +4,15 @@
 
 ;; Define package repositories
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
+;; (add-to-list 'package-archives
+;;              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("tromey" . "http://tromey.com/elpa/") t)
+;; (add-to-list 'package-archives
+;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 ;;                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -46,6 +49,9 @@
     ;; https://github.com/clojure-emacs/cider
     cider
 
+    auto-complete
+    ac-cider
+
     ;; rainbow delimiters
     rainbow-delimiters 
 
@@ -60,7 +66,7 @@
     smex
 
     ;; project navigation
-    projectile
+    ;; projectile
 
     ;; colorful parenthesis matching
     rainbow-delimiters
@@ -81,7 +87,8 @@
     magit
 
     ;; NERD tree like display of directory structure
-    neotree))
+    neotree
+    ))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
