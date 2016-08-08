@@ -52,3 +52,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Bind o to neotree-enter
 (define-key neotree-mode-map (kbd "o") 'neotree-enter)
+
+;; Proper pasting
+(setq x-select-enable-clipboard nil)
+(fset 'evil-visual-update-x-selection 'ignore)
