@@ -79,6 +79,7 @@
      (define-key clojure-mode-map (kbd "C-c C-v") 'cider-start-http-server)
      (define-key clojure-mode-map (kbd "C-M-r") 'cider-refresh)
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
+     (define-key clojure-mode-map (kbd "<f12>") 'cider-find-var)
      (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
 
 (setq cider-auto-select-error-buffer nil)
