@@ -29,12 +29,15 @@ values."
      clojure
      emacs-lisp
      git
+     gtags
+     ggtags
      markdown
      org
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-auto-dictionary t)
      syntax-checking
      themes-megapack
      version-control
@@ -98,8 +101,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-light
-                         spacemacs-dark
+   dotspacemacs-themes '(spacemacs-dark
+                         spacemacs-light
                          solarized-light
                          solarized-dark
                          leuven
