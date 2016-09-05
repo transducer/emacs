@@ -102,7 +102,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-light
+   dotspacemacs-themes '(ujelly
+                         spacemacs-light
                          himisu-light
                          spacemacs-dark
                          solarized-light
@@ -265,6 +266,10 @@ you should place your code here."
   ;; Proper pasting
   (setq x-select-enable-clipboard nil)
   (fset 'evil-visual-update-x-selection 'ignore)
+
+  ;; Press TAB to align tables in markdown or asciidoc mode.
+  (add-hook 'adoc-mode-hook 'turn-on-orgtbl)
+  (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
   )
 
