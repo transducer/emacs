@@ -1,3 +1,9 @@
+# .spacemacs
+The .spacemacs file is separate from the Emacs config above.
+Can be used with [spacemacs](https://github.com/syl20bnr/spacemacs). 
+It is a Clojure friendly Spacemacs configuration, thanks to the folks of Spacemacs.
+Follow the installation instructions and add the file to your home directory.
+
 # this is a Clojure-friendly emacs config with EVIL-mode
 
 The configuration is extended from
