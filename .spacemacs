@@ -27,15 +27,17 @@ values."
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t)
      better-defaults
+     command-log
      clojure
      emacs-lisp
      git
      gtags
-     ggtags
      markdown
      org
+     ranger
      (shell :variables
             shell-default-height 30
+            shell-default-shell 'eshell
             shell-default-position 'bottom)
      (spell-checking :variables
                      spell-checking-enable-auto-dictionary t)
@@ -102,8 +104,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(ujelly
-                         spacemacs-light
+   dotspacemacs-themes '(spacemacs-light
+                         ujelly
                          himisu-light
                          spacemacs-dark
                          solarized-light
@@ -271,6 +273,8 @@ you should place your code here."
   (add-hook 'adoc-mode-hook 'turn-on-orgtbl)
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
+  ;; Somewhat bigger font size
+  (set-face-attribute 'default nil :height 140)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
