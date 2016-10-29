@@ -31,6 +31,7 @@ values."
      (clojure :variables
               clojure-align-forms-automatically t)
      emacs-lisp
+     erlang
      git
      gtags
      html
