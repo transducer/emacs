@@ -281,8 +281,10 @@ you should place your code here."
 
   (add-to-list 'auto-mode-alist '("\\.rest$" . restclient-mode))
 
-  ;; Somewhat bigger font size
-  (set-face-attribute 'default nil :height 140)
+  ;; Bigger font sizes
+  (if (eq system-type 'darwin) ;; OSX
+      (set-face-attribute 'default nil :height 140)
+      (set-face-attribute 'default nil :height 120))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
