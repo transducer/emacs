@@ -3,6 +3,10 @@ The configuration file can be used with [spacemacs](https://github.com/syl20bnr/
 
 It provides a Clojure friendly Spacemacs configuration, thanks to the folks of Spacemacs.
 
+## Ubuntu Mono
+
+The font is set to Ubuntu Mono. Download and install from http://font.ubuntu.com/.
+
 ## Installation (Linux Mint)
 
     sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
