@@ -1,5 +1,5 @@
 # .spacemacs
-The configuration file can be used with [spacemacs](https://github.com/syl20bnr/spacemacs). 
+The configuration file can be used with [Spacemacs](https://github.com/syl20bnr/spacemacs).
 
 It provides a Clojure friendly Spacemacs configuration, thanks to the folks of Spacemacs.
 
@@ -20,7 +20,11 @@ The font is set to Ubuntu Mono. Download and install from http://font.ubuntu.com
 
 ## Installation (Mac)
 
-    brew install emacs --with-cocoa --with-gnutls
+    # https://github.com/d12frosted/homebrew-emacs-plus
+    brew tap d12frosted/emacs-plus
+    brew install emacs-plus
+    brew linkapps emacs-plus
+
     git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
     wget https://raw.githubusercontent.com/erooijak/emacs/master/.spacemacs -P ~
     emacs &
