@@ -302,11 +302,6 @@ you should place your code here."
      (emacs-lisp . t)))
 
   ;; LaTeX export (with code highlighting)
-  (require 'org-latex)
-  (add-to-list
-   'org-export-latex-packages-alist '("" "minted"))
-  (add-to-list
-   'org-export-latex-packages-alist '("" "color"))
   (setq org-export-latex-listings 'minted)
 
   ;; Bigger font sizes
