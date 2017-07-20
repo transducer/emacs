@@ -301,7 +301,9 @@ you should place your code here."
 
   (add-to-list 'auto-mode-alist '("\\.rest$" . restclient-mode))
   (add-to-list 'auto-mode-alist '("\\.pum$" . plantuml-mode))
+  (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
   (add-to-list 'auto-mode-alist '("\\.less$" . rainbow-mode))
+  (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
   (add-to-list 'auto-mode-alist '("\\.css$" . rainbow-mode))
   (add-to-list 'auto-mode-alist '("\\.sol$" . solidity-mode))
 
@@ -325,9 +327,6 @@ you should place your code here."
 
   ;; Search white space
   (setq search-whitespace-regexp nil)
-
-  ;; clj-refactor no prefix notation in namespaces
-  (cljr-favor-prefix-notation nil)
 
   )
 
