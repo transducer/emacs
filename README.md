@@ -29,3 +29,13 @@ The font is set to Ubuntu Mono. Download and install from http://font.ubuntu.com
     wget https://raw.githubusercontent.com/erooijak/emacs/master/.spacemacs -P ~
     emacs &
 
+## Cider
+
+Add the following to `~/.lein/profiles.clj`
+
+    {:user {:plugins [[lein-try "0.4.3"]]}
+     :repl {:plugins [[cider/cider-nrepl "0.16.0"]
+                      [refactor-nrepl "2.3.1"]]
+            :dependencies [[alembic "0.3.2"]
+                           [org.clojure/tools.nrepl "0.2.12"]]}}
+
