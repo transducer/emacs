@@ -68,6 +68,7 @@ values."
    dotspacemacs-additional-packages
    '(
      company-solidity
+     evil-mc
      solidity-mode
      writegood-mode
      )
@@ -340,6 +341,26 @@ you should place your code here."
   ;; Search white space
   (setq search-whitespace-regexp nil)
 
+  ;; Multiple cursors
+  (use-package evil-mc
+    :ensure t
+    :config
+    (global-evil-mc-mode 1)
+
+    (defun evil--mc-make-cursor-at-col (startcol _endcol orig-line)
+      (move-to-column startcol)
+      (unless (= (line-number-at-pos) orig-line)
+        (evil-mc-make-cursor-here)))
+    (defun evil-mc-make-vertical-cursors (beg end)
+      (interactive (list (region-beginning) (region-end)))
+      (evil-mc-pause-cursors)
+      (apply-on-rectangle #'evil--mc-make-cursor-at-col
+                          beg end (line-number-at-pos (point)))
+      (evil-mc-resume-cursors)
+      (evil-normal-state)
+      (move-to-column (evil-mc-column-number (if (> end beg)
+                                                 beg
+                                               end)))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
