@@ -342,8 +342,6 @@ you should place your code here."
   (use-package evil-mc
     :ensure t
     :config
-    (global-evil-mc-mode 1)
-
     (defun evil--mc-make-cursor-at-col (startcol _endcol orig-line)
       (move-to-column startcol)
       (unless (= (line-number-at-pos) orig-line)
@@ -358,7 +356,7 @@ you should place your code here."
       (move-to-column (evil-mc-column-number (if (> end beg)
                                                  beg
                                                end)))))
-  )
+  (global-evil-mc-mode t))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
