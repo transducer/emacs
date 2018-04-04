@@ -288,9 +288,6 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; Development
-  (add-to-list 'load-path "/Users/erooijak/git/mpare/hellodata")
-  (load-library "hellodata")
-
   (add-to-list 'load-path "/Users/erooijak/git/fleet")
   (load-library "fleet")
 
@@ -382,7 +379,6 @@ you should place your code here."
  '(ethlance-root "/Users/erooijak/git/ethlance")
  '(evil-want-Y-yank-to-eol t)
  '(fleet-root "/Users/erooijak/git/fleet")
- '(hellodata-root "/Users/erooijak/git/mpare/hellodata")
  '(highlight-symbol-colors
    (--map
     (solarized-color-blend it "#002b36" 0.25)
