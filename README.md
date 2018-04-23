@@ -5,7 +5,7 @@ It provides a Clojure friendly Spacemacs configuration, thanks to the folks of S
 
 ## Ubuntu Mono
 
-The font is set to Ubuntu Mono. Download and install from http://font.ubuntu.com/.
+The font is set to DejaVu Sans Mono. Download and install from https://www.fontsquirrel.com/fonts/dejavu-sans-mono.
 
 ## Installation (Linux Mint)
 
