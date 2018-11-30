@@ -355,7 +355,7 @@ you should place your code here."
   ;; Execute code in org-mode
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh . t)
+   '((shell . t)
      (emacs-lisp . t)))
 
   ;; LaTeX export (with code highlighting)
