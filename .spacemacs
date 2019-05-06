@@ -313,13 +313,6 @@ you should place your code here."
   (with-eval-after-load 'helm
     (setq helm-display-function 'helm-default-display-buffer))
 
-  ;; Development
-  (add-to-list 'load-path "/Users/erooijak/git/fleet")
-  (load-library "fleet")
-
-  (add-to-list 'load-path "/Users/erooijak/git/ethlance")
-  (load-library "ethlance")
-
   ;; Remap ; to : and vice versa
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
   (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
@@ -422,10 +415,8 @@ you should place your code here."
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
- '(ethlance-root "/Users/erooijak/git/ethlance")
  '(evil-want-Y-yank-to-eol t)
  '(fci-rule-color "#20240E" t)
- '(fleet-root "/Users/erooijak/git/fleet")
  '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
  '(highlight-symbol-colors
    (--map
