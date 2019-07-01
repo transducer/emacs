@@ -296,7 +296,7 @@ values."
    web-mode-markup-indent-offset 2
 
    ;; NeoTree icons
-   ;; neo-theme 'icons
+   neo-theme 'icons
    ))
 
 (defun dotspacemacs/user-init ()

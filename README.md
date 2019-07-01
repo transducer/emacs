@@ -3,11 +3,9 @@ The configuration file can be used with [Spacemacs](https://github.com/syl20bnr/
 
 It provides a Clojure friendly Spacemacs configuration, thanks to the folks of Spacemacs.
 
-## Ubuntu Mono
+## Installation
 
-The font is set to DejaVu Sans Mono. Download and install from https://www.fontsquirrel.com/fonts/dejavu-sans-mono.
-
-## Installation (Linux Mint)
+### Installation (Linux Mint)
 
     sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
     sudo add-apt-repository ppa:ubuntu-elisp/ppa
@@ -18,7 +16,7 @@ The font is set to DejaVu Sans Mono. Download and install from https://www.fonts
     wget https://raw.githubusercontent.com/erooijak/emacs/master/.spacemacs -P ~
     emacs &
 
-## Installation (Mac)
+### Installation (macOS)
 
     # https://github.com/d12frosted/homebrew-emacs-plus
     brew tap d12frosted/emacs-plus
@@ -28,6 +26,11 @@ The font is set to DejaVu Sans Mono. Download and install from https://www.fonts
     git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
     wget https://raw.githubusercontent.com/erooijak/emacs/master/.spacemacs -P ~
     emacs &
+
+### Fonts
+
+- The font is set to DejaVu Sans Mono. Download and install from [https://www.fontsquirrel.com/fonts/dejavu-sans-mono](https://www.fontsquirrel.com/fonts/dejavu-sans-mono)
+_ For NeoTree icons to work install these fonts: [https://github.com/domtronn/all-the-icons.el/tree/master/fonts](https://github.com/domtronn/all-the-icons.el/tree/master/fonts).
 
 ## Cider
 
