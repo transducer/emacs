@@ -42,7 +42,6 @@ values."
               clojure-enable-clj-refactor t
               clojure-enable-linters t)
      emacs-lisp
-     emoji
      erlang
      (git :variables
           git-enable-github-support t)
@@ -421,6 +420,8 @@ you should place your code here."
   ;; Show YAML indentation visually
   (add-hook 'yaml-mode-hook 'highlight-indentation-mode)
   (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
+
+  (global-emojify-mode t)
 
   ;; (use-package clojure-mode
   ;;   :ensure t
