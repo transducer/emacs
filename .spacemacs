@@ -41,7 +41,7 @@ values."
      (clojure :variables
               clojure-enable-sayid t
               clojure-enable-clj-refactor t
-              clojure-enable-linters t)
+              clojure-enable-linters 'clj-kondo)
      emacs-lisp
      emoji
      erlang
@@ -427,19 +427,6 @@ you should place your code here."
   (add-hook 'yaml-mode-hook 'highlight-indentation-mode)
   (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
 
-  (use-package clojure-mode
-    :ensure t
-    :config
-    (require 'flycheck-joker)
-    (require 'flycheck-clj-kondo)
-    (dolist (checker '(clj-kondo-clj clj-kondo-cljs clj-kondo-cljc clj-kondo-edn))
-      (setq flycheck-checkers (cons checker (delq checker flycheck-checkers))))
-    (dolist (checkers '((clj-kondo-clj . clojure-joker)
-                        (clj-kondo-cljs . clojurescript-joker)
-                        (clj-kondo-cljc . clojure-joker)
-                        (clj-kondo-edn . edn-joker)))
-      (flycheck-add-next-checker (car checkers) (cons 'error (cdr checkers)))))
-  (add-hook 'clojure-mode-hook 'flycheck-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
