@@ -129,7 +129,9 @@ This function should only modify configuration layer settings."
    ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only
 
+   native-comp-async-report-warnings-errors nil
 
+   cider-repl-display-help-banner nil
     ))
 
 (defun dotspacemacs/init ()
@@ -634,8 +636,13 @@ before packages are loaded."
   ;; Print eval sexp
   (define-key evil-normal-state-map (kbd "C-;") 'cider-pprint-eval-last-sexp-to-comment)
 
+  ;; org-mode fix bindings
+  (with-eval-after-load 'org-mode
+    (define-key evil-normal-state-map (kbd "gj") 'evil-next-visual-line)
+    (define-key evil-normal-state-map (kbd "gk") 'evil-previous-visual-line))
+
   ;; Vim clipboard pasting
-  (setq x-select-enable-clipboard nil)
+  (setq x-select-enable-clipboard t)
   (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; Press TAB to align tables in markdown or asciidoc mode.
@@ -776,6 +783,12 @@ before packages are loaded."
     (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
       languagetool-console-command "~/.languagetool/languagetool-commandline.jar"
       languagetool-server-command "~/.languagetool/languagetool-server.jar"))
+
+  (define-key evil-normal-state-map (kbd "<SPC>Sf") 'languagetool-correct-at-point)
+  (define-key evil-normal-state-map (kbd "<SPC>Sl") 'languagetool-check)
+
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -791,7 +804,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    '(languagetool org-sidebar org-ql peg ov org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode writegood-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree toc-org terminal-here tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator json-mode js2-refactor js-doc inspector info+ indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot gmail-message-mode gitignore-templates git-timemachine git-modes git-messenger git-link git-gutter-fringe gh-md ggtags gendoxy geben fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def editorconfig edit-server dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes disaster dired-quick-sort diminish devdocs define-word cython-mode csv-mode cpp-auto-include company-ycmd company-web company-statistics company-solidity company-rtags company-restclient company-reftex company-quickhelp company-phpactor company-php company-math company-emoji company-c-headers company-auctex company-anaconda command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-window ace-link ace-jump-helm-line ac-ispell)))
+    '(languagetool org-sidebar org-ql peg ov org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode writegood-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree toc-org terminal-here tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator json-mode js2-refactor js-doc inspector info+ indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot gmail-message-mode gitignore-templates git-timemachine git-modes git-messenger git-link git-gutter-fringe gh-md ggtags gendoxy geben fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def editorconfig edit-server dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes disaster dired-quick-sort diminish devdocs define-word cython-mode csv-mode cpp-auto-include company-ycmd company-web company-statistics company-solidity company-rtags company-restclient company-reftex company-quickhelp company-phpactor company-php company-math company-emoji company-c-headers company-auctex company-anaconda command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-window ace-link ace-jump-helm-line ac-ispell))
+ '(warning-suppress-log-types '((with-editor))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
