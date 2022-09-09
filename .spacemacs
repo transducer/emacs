@@ -65,7 +65,6 @@ This function should only modify configuration layer settings."
      kubernetes
      (latex :variables latex-build-command "LaTeX")
      markdown
-     org
      plantuml
      ranger
      react
@@ -110,6 +109,7 @@ This function should only modify configuration layer settings."
      all-the-icons
      flycheck-joker
      flycheck-clj-kondo
+     org
      org-sidebar
      languagetool
    )
@@ -132,6 +132,10 @@ This function should only modify configuration layer settings."
    native-comp-async-report-warnings-errors nil
 
    cider-repl-display-help-banner nil
+
+   ;; LaTeX export (with code highlighting)
+   org-export-latex-listings 'minted
+   org-clock-persist 'history
     ))
 
 (defun dotspacemacs/init ()
@@ -587,7 +591,10 @@ It should only modify the values of Spacemacs settings."
     ;; NeoTree icons
     neo-theme 'icons
     ;; Magit
-    magit-prefer-remote-upstream t))
+    magit-prefer-remote-upstream t
+    ;; Cider
+    cider-enrich-classpath t
+    ))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -636,19 +643,27 @@ before packages are loaded."
   ;; Print eval sexp
   (define-key evil-normal-state-map (kbd "C-;") 'cider-pprint-eval-last-sexp-to-comment)
 
-  ;; org-mode fix bindings
-  (with-eval-after-load 'org-mode
-    (define-key evil-normal-state-map (kbd "gj") 'evil-next-visual-line)
-    (define-key evil-normal-state-map (kbd "gk") 'evil-previous-visual-line))
+  (global-visual-line-mode t)
+
+  ;; Execute code in org-mode
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((shell . t)
+       (emacs-lisp . t)))
+
+  ;; Presentation
+  (require 'ox-beamer)
+  (setq org-export-backends '(beamer html latex md gfm))
+
+  (org-clock-persistence-insinuate)
 
   ;; Vim clipboard pasting
-  (setq x-select-enable-clipboard t)
+  (setq x-select-enable-clipboard t) ; +-register does not work atm so enable
   (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; Press TAB to align tables in markdown or asciidoc mode.
   (add-hook 'adoc-mode-hook 'turn-on-orgtbl)
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
-
 
   (add-to-list 'auto-mode-alist '("\\.rest$" . restclient-mode))
   (add-to-list 'auto-mode-alist '("\\.pum$" . plantuml-mode))
@@ -663,19 +678,6 @@ before packages are loaded."
   ;;   (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
   ;;   (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
   ;;   (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
-
-  ;; Presentation
-  (require 'ox-beamer)
-  (setq org-export-backends '(beamer html latex md gfm))
-
-  ;; Execute code in org-mode
-  (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((shell . t)
-       (emacs-lisp . t)))
-
-  ;; LaTeX export (with code highlighting)
-  (setq org-export-latex-listings 'minted)
 
   ;; Bigger font sizes
   (if (eq system-type 'darwin) ;; OSX
@@ -763,9 +765,6 @@ before packages are loaded."
          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
   (define-key evil-normal-state-map (kbd "<SPC>py") 'org-sidebar-tree-toggle)
-
-  (setq org-clock-persist 'history)
-  (org-clock-persistence-insinuate)
 
   (use-package languagetool
     :ensure t
