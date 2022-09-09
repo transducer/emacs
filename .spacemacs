@@ -110,6 +110,7 @@ This function should only modify configuration layer settings."
      flycheck-joker
      flycheck-clj-kondo
      org
+     org-contrib
      org-sidebar
      languagetool
    )
