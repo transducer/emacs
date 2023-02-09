@@ -800,7 +800,7 @@ before packages are loaded."
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
 
-  (setq-default evil-escape-key-sequence "jk" "kj")
+  (setq-default evil-escape-key-sequence "jj" "jk" "kj")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
