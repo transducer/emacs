@@ -49,7 +49,7 @@ This function should only modify configuration layer settings."
      colors
      command-log
      (clojure :variables
-              clojure-enable-sayid nil
+              ;; clojure-enable-sayid nil
               clojure-enable-clj-refactor t
               clojure-backend 'cider
               clojure-enable-linters 'clj-kondo)
@@ -59,7 +59,6 @@ This function should only modify configuration layer settings."
      (git :variables
           git-enable-github-support t)
      graphviz
-     gtags
      html
      javascript
      kubernetes
@@ -233,6 +232,13 @@ It should only modify the values of Spacemacs settings."
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
 
+   ;; Scale factor controls the scaling (size) of the startup banner. Default
+   ;; value is `auto' for scaling the logo automatically to fit all buffer
+   ;; contents, to a maximum of the full image height and a minimum of 3 line
+   ;; heights. If set to a number (int or float) it is used as a constant
+   ;; scaling factor for the default logo size.
+   dotspacemacs-startup-banner-scale 'auto
+
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -254,6 +260,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; The minimum delay in seconds between number key presses. (default 0.4)
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
+
+   ;; If non-nil, show file icons for entries and headings on Spacemacs home buffer.
+   ;; This has no effect in terminal or if "all-the-icons" package or the font
+   ;; is not installed. (default nil)
+   dotspacemacs-startup-buffer-show-icons nil
 
    ;; Default major mode for a new empty buffer. Possible values are mode
    ;; names such as `text-mode'; and `nil' to use Fundamental mode.
@@ -282,7 +293,8 @@ It should only modify the values of Spacemacs settings."
                          doom-peacock
                          doom-dracula
                          spacemacs-dark
-                         spacemacs-light)
+                         spacemacs-light
+                         doom-one-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -402,12 +414,12 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
-   dotspacemacs-fullscreen-use-non-native t
+   dotspacemacs-fullscreen-use-non-native nil
 
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -423,6 +435,11 @@ It should only modify the values of Spacemacs settings."
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 90
+
+   ;; A value from the range (0..100), in increasing opacity, which describes the
+   ;; transparency level of a frame background when it's active or selected. Transparency
+   ;; can be toggled through `toggle-background-transparency'. (default 90)
+   dotspacemacs-background-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -642,6 +659,13 @@ before packages are loaded."
   ;; Fix forward jump
   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
 
+  ;; Misspresses of C-[ also lead to ESC
+  (define-key evil-insert-state-map (kbd "C-]") 'evil-escape)
+  (define-key evil-replace-state-map (kbd "C-]") 'evil-escape)
+  (define-key evil-visual-state-map (kbd "C-]") 'evil-escape)
+  (define-key evil-operator-state-map (kbd "C-]") 'evil-escape)
+  (define-key evil-normal-state-map (kbd "C-]") 'evil-escape)
+
   ;; Print eval sexp
   (define-key evil-normal-state-map (kbd "C-;") 'cider-pprint-eval-last-sexp-to-comment)
 
@@ -667,7 +691,7 @@ before packages are loaded."
   (org-clock-persistence-insinuate)
 
   ;; Vim clipboard pasting
-  (setq x-select-enable-clipboard t) ; +-register does not work atm so enable
+  ;; (setq x-select-enable-clipboard nil) ; +-register does not work atm so enable
   (fset 'evil-visual-update-x-selection 'ignore)
 
   ;; Press TAB to align tables in markdown or asciidoc mode.
@@ -799,8 +823,6 @@ before packages are loaded."
 
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
-
-  (setq-default evil-escape-key-sequence "jj" "jk" "kj")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -816,8 +838,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-escape-unordered-key-sequence t)
+ '(ignored-local-variable-values '((cider-shadow-cljs-default-options . "app")))
  '(package-selected-packages
-    '(languagetool org-sidebar org-ql peg ov org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode writegood-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree toc-org terminal-here tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator json-mode js2-refactor js-doc inspector info+ indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot gmail-message-mode gitignore-templates git-timemachine git-modes git-messenger git-link git-gutter-fringe gh-md ggtags gendoxy geben fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def editorconfig edit-server dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes disaster dired-quick-sort diminish devdocs define-word cython-mode csv-mode cpp-auto-include company-ycmd company-web company-statistics company-solidity company-rtags company-restclient company-reftex company-quickhelp company-phpactor company-php company-math company-emoji company-c-headers company-auctex company-anaconda command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-window ace-link ace-jump-helm-line ac-ispell))
+    '(copilot languagetool org-sidebar org-ql peg ov org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode writegood-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree toc-org terminal-here tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator json-mode js2-refactor js-doc inspector info+ indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot gmail-message-mode gitignore-templates git-timemachine git-modes git-messenger git-link git-gutter-fringe gh-md ggtags gendoxy geben fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def editorconfig edit-server dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes disaster dired-quick-sort diminish devdocs define-word cython-mode csv-mode cpp-auto-include company-ycmd company-web company-statistics company-solidity company-rtags company-restclient company-reftex company-quickhelp company-phpactor company-php company-math company-emoji company-c-headers company-auctex company-anaconda command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-window ace-link ace-jump-helm-line ac-ispell))
  '(warning-suppress-log-types '((with-editor))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
