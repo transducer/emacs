@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
      graphviz
      html
      javascript
+     java
      kubernetes
      (latex :variables latex-build-command "LaTeX")
      markdown
@@ -659,13 +660,6 @@ before packages are loaded."
   ;; Fix forward jump
   (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
 
-  ;; Misspresses of C-[ also lead to ESC
-  (define-key evil-insert-state-map (kbd "C-]") 'evil-escape)
-  (define-key evil-replace-state-map (kbd "C-]") 'evil-escape)
-  (define-key evil-visual-state-map (kbd "C-]") 'evil-escape)
-  (define-key evil-operator-state-map (kbd "C-]") 'evil-escape)
-  (define-key evil-normal-state-map (kbd "C-]") 'evil-escape)
-
   ;; Print eval sexp
   (define-key evil-normal-state-map (kbd "C-;") 'cider-pprint-eval-last-sexp-to-comment)
 
@@ -691,11 +685,12 @@ before packages are loaded."
   (org-clock-persistence-insinuate)
 
   ;; Vim clipboard pasting
-  ;; (setq x-select-enable-clipboard nil) ; +-register does not work atm so enable
+  (setq x-select-enable-clipboard nil)
   (fset 'evil-visual-update-x-selection 'ignore)
 
-  ;; Press TAB to align tables in markdown or asciidoc mode.
+  ;; Press TAB to align tables in markdown, org or asciidoc mode.
   (add-hook 'adoc-mode-hook 'turn-on-orgtbl)
+  (add-hook 'org-mode-hook 'turn-on-orgtbl)
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
   (add-hook 'neotree-mode-hook (lambda () (visual-line-mode -1)))
@@ -791,8 +786,8 @@ before packages are loaded."
 
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-classes
-      '("extarticle"
-         "\\documentclass{extarticle}"
+      '("tufte-book"
+         "\\documentclass{tufte-book}"
          ("\\section{%s}" . "\\section*{%s}")
          ("\\subsection{%s}" . "\\subsection*{%s}")
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -823,7 +818,13 @@ before packages are loaded."
 
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
-  )
+
+  ;; Prevent growing of savehist file
+  ;; See https://github.com/syl20bnr/spacemacs/issues/9409
+  (setq history-length 100)
+  (put 'minibuffer-history 'history-length 50)
+  (put 'evil-ex-history 'history-length 50)
+  (put 'kill-ring 'history-length 25))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -840,7 +841,61 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-escape-unordered-key-sequence t)
  '(ignored-local-variable-values '((cider-shadow-cljs-default-options . "app")))
  '(package-selected-packages
-    '(copilot languagetool org-sidebar org-ql peg ov org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode writegood-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree toc-org terminal-here tagedit symon symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator json-mode js2-refactor js-doc inspector info+ indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot gmail-message-mode gitignore-templates git-timemachine git-modes git-messenger git-link git-gutter-fringe gh-md ggtags gendoxy geben fuzzy font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def editorconfig edit-server dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes disaster dired-quick-sort diminish devdocs define-word cython-mode csv-mode cpp-auto-include company-ycmd company-web company-statistics company-solidity company-rtags company-restclient company-reftex company-quickhelp company-phpactor company-php company-math company-emoji company-c-headers company-auctex company-anaconda command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-window ace-link ace-jump-helm-line ac-ispell))
+    '(ccls helm-lsp lsp-java dap-mode lsp-docker lsp-treemacs bui treemacs cfrs
+       pfuture lsp-latex consult lsp-origami origami lsp-pyright lsp-python-ms
+       lsp-ui lsp-mode groovy-imports pcache groovy-mode maven-test-mode
+       meghanada mvn copilot languagetool org-sidebar org-ql peg ov
+       org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode
+       xterm-color ws-butler writeroom-mode writegood-mode winum which-key
+       web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen
+       use-package unfill undo-tree toc-org terminal-here tagedit symon
+       symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor
+       sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode
+       shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools
+       ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop
+       rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake
+       rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest
+       pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry
+       plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras
+       php-auto-yasnippets persp-mode password-generator paradox overseer
+       orgit-forge org-superstar org-rich-yank org-projectile org-present
+       org-pomodoro org-mime org-download org-contrib org-cliplink
+       open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl
+       nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest
+       markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint
+       kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator
+       json-mode js2-refactor js-doc inspector info+ indent-guide importmagic
+       impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses
+       highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes
+       helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose
+       helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make
+       helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds
+       helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag
+       graphviz-dot-mode google-translate google-c-style golden-ratio gnuplot
+       gmail-message-mode gitignore-templates git-timemachine git-modes
+       git-messenger git-link git-gutter-fringe gh-md ggtags gendoxy geben fuzzy
+       font-lock+ flyspell-popup flyspell-correct-helm flymd flycheck-ycmd
+       flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa
+       flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region
+       evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor
+       evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org
+       evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state
+       evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange
+       evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens
+       evil-args evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr
+       emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def
+       editorconfig edit-server dumb-jump drupal-mode drag-stuff dotenv-mode
+       doom-themes disaster dired-quick-sort diminish devdocs define-word
+       cython-mode csv-mode cpp-auto-include company-ycmd company-web
+       company-statistics company-solidity company-rtags company-restclient
+       company-reftex company-quickhelp company-phpactor company-php
+       company-math company-emoji company-c-headers company-auctex
+       company-anaconda command-log-mode column-enforce-mode
+       color-identifiers-mode clojure-snippets clj-refactor clean-aindent-mode
+       cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote
+       blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile
+       aggressive-indent adoc-mode ace-window ace-link ace-jump-helm-line
+       ac-ispell))
  '(warning-suppress-log-types '((with-editor))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
