@@ -56,6 +56,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      emoji
      erlang
+     ess
      (git :variables
           git-enable-github-support t)
      graphviz
@@ -70,6 +71,7 @@ This function should only modify configuration layer settings."
      react
      restclient
      ruby
+     rust
      (shell :variables
             shell-default-height 30
             shell-default-shell 'ansi-term
