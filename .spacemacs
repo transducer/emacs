@@ -59,6 +59,7 @@ This function should only modify configuration layer settings."
      ess
      (git :variables
           git-enable-github-support t)
+     (go :variables go-backend 'lsp)
      graphviz
      html
      javascript
@@ -83,6 +84,7 @@ This function should only modify configuration layer settings."
      spotify
      sql
      syntax-checking
+     (terraform :variables terraform-auto-format-on-save t)
      version-control
      yaml
      emoji
@@ -114,6 +116,7 @@ This function should only modify configuration layer settings."
      org-contrib
      org-sidebar
      languagetool
+     zprint-mode
    )
 
    ;; A list of packages that cannot be updated.
@@ -843,30 +846,31 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-escape-unordered-key-sequence t)
  '(ignored-local-variable-values '((cider-shadow-cljs-default-options . "app")))
  '(package-selected-packages
-    '(ccls helm-lsp lsp-java dap-mode lsp-docker lsp-treemacs bui treemacs cfrs
-       pfuture lsp-latex consult lsp-origami origami lsp-pyright lsp-python-ms
-       lsp-ui lsp-mode groovy-imports pcache groovy-mode maven-test-mode
-       meghanada mvn copilot languagetool org-sidebar org-ql peg ov
-       org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode
-       xterm-color ws-butler writeroom-mode writegood-mode winum which-key
-       web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen
-       use-package unfill undo-tree toc-org terminal-here tagedit symon
-       symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor
-       sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode
-       shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools
-       ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop
-       rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake
-       rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest
-       pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry
-       plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras
-       php-auto-yasnippets persp-mode password-generator paradox overseer
-       orgit-forge org-superstar org-rich-yank org-projectile org-present
-       org-pomodoro org-mime org-download org-contrib org-cliplink
-       open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl
-       nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest
-       markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint
-       kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator
-       json-mode js2-refactor js-doc inspector info+ indent-guide importmagic
+    '(hcl-mode zprint-mode ccls helm-lsp lsp-java dap-mode lsp-docker lsp-treemacs
+       bui treemacs cfrs pfuture lsp-latex consult lsp-origami origami
+       lsp-pyright lsp-python-ms lsp-ui lsp-mode groovy-imports pcache
+       groovy-mode maven-test-mode meghanada mvn copilot languagetool
+       org-sidebar org-ql peg ov org-super-agenda compat ts tern
+       yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode
+       writegood-mode winum which-key web-mode web-beautify vterm
+       volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree
+       toc-org terminal-here tagedit symon symbol-overlay string-inflection
+       string-edit stickyfunc-enhance srefactor sql-indent spotify sphinx-doc
+       spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing
+       scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor
+       ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode
+       restclient-helm restart-emacs rbenv ranger rake rainbow-mode
+       rainbow-identifiers rainbow-delimiters quickrun pytest pyenv-mode pydoc
+       py-isort pug-mode prettier-js popwin poetry plantuml-mode pippel pipenv
+       pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode
+       password-generator paradox overseer orgit-forge org-superstar
+       org-rich-yank org-projectile org-present org-pomodoro org-mime
+       org-download org-contrib org-cliplink open-junk-file omnisharp
+       ob-restclient ob-http npm-mode nose nodejs-repl nginx-mode neotree
+       nameless mwim multi-term multi-line mmm-mode minitest markdown-toc
+       macrostep lorem-ipsum livid-mode live-py-mode link-hint kubernetes-tramp
+       kubernetes-evil keycast json-reformat json-navigator json-mode
+       js2-refactor js-doc inspector info+ indent-guide importmagic
        impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses
        highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes
        helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose
