@@ -416,11 +416,11 @@ It should only modify the values of Spacemacs settings."
 
     ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
     ;; (Emacs 24.4+ only)
-    dotspacemacs-fullscreen-at-startup t
+    dotspacemacs-fullscreen-at-startup nil
 
     ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
     ;; Use to disable fullscreen animations in OSX. (default nil)
-    dotspacemacs-fullscreen-use-non-native nil
+    dotspacemacs-fullscreen-use-non-native t
 
     ;; If non-nil the frame is maximized when Emacs starts up.
     ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
@@ -627,8 +627,19 @@ It should only modify the values of Spacemacs settings."
        "pdflatex -shell-escape -interaction nonstopmode %f")
 
     lsp-headerline-breadcrumb-enable-diagnostics nil
-
-    ))
+    lsp-enable-on-type-formatting nil
+    lsp-enable-indentation nil
+    lsp-ui-sideline-enable nil
+    lsp-headerline-breadcrumb-enable nil
+    lsp-signature-render-documentation nil
+    lsp-signature-function 'lsp-signature-posframe
+    lsp-signature-auto-activate nil
+    lsp-semantic-tokens-enable t
+    lsp-enable-indentation nil
+    lsp-idle-delay 0.05
+    lsp-use-plists nil
+    lsp-ui-doc-enable nil
+    lsp-ui-peek-enable nil))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -761,7 +772,7 @@ before packages are loaded."
   ;; (add-hook 'clojure-mode-hook
   ;;           (lambda () (add-hook 'before-save-hook 'cider-format-buffer nil 'local)))
 
-  (add-hook 'clojure-mode-hook 'aggressive-indent-mode)
+  ;; (add-hook 'clojure-mode-hook 'aggressive-indent-mode) ; does not work with lsp
 
   (add-hook 'clojure-mode-hook
     (lambda () (setq cider-cljs-lein-repl
