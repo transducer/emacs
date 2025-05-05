@@ -66,6 +66,7 @@ This function should only modify configuration layer settings."
      (latex :variables latex-build-command "LaTeX")
      (llm-client :variables llm-client-enable-gptel t)
      markdown
+     pdf-tools
      plantuml
      ranger
      react
@@ -123,6 +124,7 @@ This function should only modify configuration layer settings."
 
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
+                                    code-review
                                     )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -640,6 +642,9 @@ It should only modify the values of Spacemacs settings."
    lsp-use-plists nil
    lsp-ui-doc-enable nil
    lsp-ui-peek-enable nil
+
+   helm-ag-use-agignore t
+   helm-ag-command-option " -U"
    ))
 
 (defun dotspacemacs/user-env ()
@@ -773,7 +778,7 @@ before packages are loaded."
   ;; (add-hook 'clojure-mode-hook
   ;;           (lambda () (add-hook 'before-save-hook 'cider-format-buffer nil 'local)))
 
-  ;; (add-hook 'clojure-mode-hook 'aggressive-indent-mode) ; does not work with lsp
+  (add-hook 'clojure-mode-hook 'aggressive-indent-mode) ; does not work with lsp (?)
 
   (add-hook 'clojure-mode-hook
             (lambda () (setq cider-cljs-lein-repl
