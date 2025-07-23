@@ -66,7 +66,7 @@ This function should only modify configuration layer settings."
      (latex :variables latex-build-command "LaTeX")
      (llm-client :variables llm-client-enable-gptel t)
      markdown
-     pdf-tools
+     org
      plantuml
      ranger
      react
@@ -195,7 +195,7 @@ It should only modify the values of Spacemacs settings."
    ;; Setting this >= 1 MB should increase performance for lsp servers
    ;; in emacs 27.
    ;; (default (* 1024 1024))
-   dotspacemacs-read-process-output-max (* 1024 1024)
+   dotspacemacs-read-process-output-max (* 2048 1024)
 
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
@@ -417,7 +417,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -426,7 +426,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -641,10 +641,13 @@ It should only modify the values of Spacemacs settings."
    lsp-idle-delay 0.05
    lsp-use-plists nil
    lsp-ui-doc-enable nil
-   lsp-ui-peek-enable nil
+   ;; lsp-ui-peek-enable nil
 
-   helm-ag-use-agignore t
-   helm-ag-command-option " -U"
+   helm-ag-use-agignore nil
+
+   plantuml-java-command "java"
+   plantuml-java-command "/opt/homebrew/opt/openjdk/bin/java"
+   plantuml-jar-path "~/plantuml.jar"
    ))
 
 (defun dotspacemacs/user-env ()
@@ -871,7 +874,8 @@ before packages are loaded."
   (setq history-length 100)
   (put 'minibuffer-history 'history-length 50)
   (put 'evil-ex-history 'history-length 50)
-  (put 'kill-ring 'history-length 25))
+  (put 'kill-ring 'history-length 25)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -886,63 +890,76 @@ This function is called at the very end of Spacemacs initialization."
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(evil-escape-unordered-key-sequence t)
-   '(ignored-local-variable-values '((cider-shadow-cljs-default-options . "app")))
+   '(ignored-local-variable-values
+     '((cider-shadow-default-options . "dev") (cider-default-cljs-repl . shadow)
+       (cider-preferred-build-tool . shadow-cljs)
+       (cider-shadow-cljs-default-options . "app")))
    '(package-selected-packages
-     '(ellama llm plz-event-source plz-media-type plz gptel hcl-mode zprint-mode ccls
-              helm-lsp lsp-java dap-mode lsp-docker lsp-treemacs bui treemacs cfrs
-              pfuture lsp-latex consult lsp-origami origami lsp-pyright lsp-python-ms
-              lsp-ui lsp-mode groovy-imports pcache groovy-mode maven-test-mode
-              meghanada mvn copilot languagetool org-sidebar org-ql peg ov
-              org-super-agenda compat ts tern yasnippet-snippets yapfify yaml-mode
-              xterm-color ws-butler writeroom-mode writegood-mode winum which-key
-              web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen
-              use-package unfill undo-tree toc-org terminal-here tagedit symon
-              symbol-overlay string-inflection string-edit stickyfunc-enhance srefactor
-              sql-indent spotify sphinx-doc spaceline-all-the-icons smeargle slim-mode
-              shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools
-              ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop
-              rspec-mode robe rjsx-mode restclient-helm restart-emacs rbenv ranger rake
-              rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pytest
-              pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry
-              plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras
-              php-auto-yasnippets persp-mode password-generator paradox overseer
-              orgit-forge org-superstar org-rich-yank org-projectile org-present
-              org-pomodoro org-mime org-download org-contrib org-cliplink
-              open-junk-file omnisharp ob-restclient ob-http npm-mode nose nodejs-repl
-              nginx-mode neotree nameless mwim multi-term multi-line mmm-mode minitest
-              markdown-toc macrostep lorem-ipsum livid-mode live-py-mode link-hint
-              kubernetes-tramp kubernetes-evil keycast json-reformat json-navigator
-              json-mode js2-refactor js-doc inspector info+ indent-guide importmagic
-              impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses
-              highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes
-              helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose
-              helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make
-              helm-ls-git helm-gtags helm-git-grep helm-flx helm-descbinds
-              helm-css-scss helm-company helm-cider helm-c-yasnippet graphviz-dot-mode
-              google-translate google-c-style golden-ratio gnuplot gmail-message-mode
-              gitignore-templates git-timemachine git-modes git-messenger git-link
-              git-gutter-fringe gh-md ggtags gendoxy geben fuzzy font-lock+
-              flyspell-popup flyspell-correct-helm flymd flycheck-ycmd flycheck-rtags
-              flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo
-              flx-ido fancy-battery eyebrowse expand-region evil-visualstar
-              evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line
-              evil-terminal-cursor-changer evil-surround evil-org evil-numbers
-              evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion
-              evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape
-              evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args
-              evil-anzu eshell-z eshell-prompt-extras esh-help erlang emr emojify
-              emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elisp-def editorconfig
-              edit-server dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes
-              disaster dired-quick-sort diminish devdocs define-word cython-mode
-              csv-mode cpp-auto-include company-ycmd company-web company-statistics
-              company-solidity company-rtags company-restclient company-reftex
-              company-quickhelp company-phpactor company-php company-math company-emoji
-              company-c-headers company-auctex company-anaconda command-log-mode
-              column-enforce-mode color-identifiers-mode clojure-snippets clj-refactor
-              clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler
-              browse-at-remote blacken auto-yasnippet auto-highlight-symbol
-              auto-dictionary auto-compile aggressive-indent adoc-mode ace-window
-              ace-link ace-jump-helm-line ac-ispell))
+     '(ac-ispell ace-jump-helm-line ace-link ace-window adoc-mode aggressive-indent
+                 alert auto-compile auto-dictionary auto-highlight-symbol
+                 auto-yasnippet blacken browse-at-remote bui bundler ccls
+                 centered-cursor-mode cfrs chruby cider-eval-sexp-fu
+                 clean-aindent-mode clj-refactor clojure-snippets
+                 color-identifiers-mode column-enforce-mode command-log-mode
+                 company-anaconda company-auctex company-c-headers company-emoji
+                 company-math company-php company-phpactor company-quickhelp
+                 company-reftex company-restclient company-rtags company-solidity
+                 company-statistics company-web company-ycmd compat consult
+                 copilot cpp-auto-include csv-mode cython-mode dap-mode
+                 define-word devdocs diminish dired-quick-sort disaster
+                 doom-themes dotenv-mode drag-stuff drupal-mode dumb-jump
+                 edit-server editorconfig elisp-def elisp-slime-nav ellama
+                 emmet-mode emoji-cheat-sheet-plus emojify emr erlang esh-help
+                 eshell-prompt-extras eshell-z evil-anzu evil-args
+                 evil-cleverparens evil-collection evil-easymotion evil-ediff
+                 evil-escape evil-exchange evil-goggles evil-iedit-state
+                 evil-indent-plus evil-lion evil-lisp-state evil-matchit evil-mc
+                 evil-nerd-commenter evil-numbers evil-org evil-surround
+                 evil-terminal-cursor-changer evil-textobj-line evil-tutor
+                 evil-unimpaired evil-visual-mark-mode evil-visualstar
+                 expand-region eyebrowse fancy-battery flx-ido flycheck-clj-kondo
+                 flycheck-elsa flycheck-package flycheck-pos-tip flycheck-rtags
+                 flycheck-ycmd flymd flyspell-correct-helm flyspell-popup
+                 font-lock+ fuzzy geben gendoxy ggtags gh-md git-gutter-fringe
+                 git-link git-messenger git-modes git-timemachine
+                 gitignore-templates gmail-message-mode gntp gnuplot golden-ratio
+                 google-c-style google-translate gptel graphviz-dot-mode
+                 groovy-imports groovy-mode hcl-mode helm-c-yasnippet helm-cider
+                 helm-company helm-css-scss helm-descbinds helm-flx helm-git-grep
+                 helm-gtags helm-ls-git helm-lsp helm-make helm-mode-manager
+                 helm-org helm-org-rifle helm-projectile helm-purpose helm-pydoc
+                 helm-rtags helm-spotify-plus helm-swoop helm-themes helm-xref
+                 hide-comnt highlight-indentation highlight-numbers
+                 highlight-parentheses hl-todo hungry-delete hybrid-mode
+                 impatient-mode importmagic indent-guide info+ inspector js-doc
+                 js2-refactor json-mode json-navigator json-reformat keycast
+                 kubernetes-evil kubernetes-tramp languagetool link-hint
+                 live-py-mode livid-mode llm log4e lorem-ipsum lsp-docker lsp-java
+                 lsp-latex lsp-mode lsp-origami lsp-pyright lsp-python-ms
+                 lsp-treemacs lsp-ui macrostep markdown-toc maven-test-mode
+                 meghanada minitest mmm-mode multi-line multi-term mvn mwim
+                 nameless neotree nginx-mode nodejs-repl nose npm-mode ob-http
+                 ob-restclient omnisharp open-junk-file org-category-capture
+                 org-cliplink org-contrib org-download org-mime org-pomodoro
+                 org-present org-project-capture org-projectile org-ql
+                 org-rich-yank org-sidebar org-super-agenda org-superstar orgit
+                 orgit-forge origami ov overseer paradox password-generator pcache
+                 peg persp-mode pfuture php-auto-yasnippets php-extras phpcbf
+                 phpunit pip-requirements pipenv pippel plantuml-mode plz
+                 plz-event-source plz-media-type poetry popwin prettier-js
+                 pug-mode py-isort pydoc pyenv-mode pytest quickrun
+                 rainbow-delimiters rainbow-identifiers rainbow-mode rake ranger
+                 rbenv restart-emacs restclient-helm rjsx-mode robe rspec-mode
+                 rubocop rubocopfmt ruby-hash-syntax ruby-refactor ruby-test-mode
+                 ruby-tools rvm sass-mode scss-mode seeing-is-believing shell-pop
+                 slim-mode smeargle spaceline-all-the-icons sphinx-doc spotify
+                 sql-indent srefactor stickyfunc-enhance string-edit
+                 string-inflection symbol-overlay symon tagedit terminal-here tern
+                 toc-org treemacs ts undo-tree unfill use-package uuidgen
+                 vi-tilde-fringe volatile-highlights vterm web-beautify web-mode
+                 which-key winum writegood-mode writeroom-mode ws-butler
+                 xterm-color yaml-mode yapfify yasnippet-snippets zen-mode
+                 zprint-mode))
    '(warning-suppress-log-types '((with-editor))))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
