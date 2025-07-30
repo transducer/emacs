@@ -66,7 +66,6 @@ This function should only modify configuration layer settings."
      (latex :variables latex-build-command "LaTeX")
      (llm-client :variables llm-client-enable-gptel t)
      markdown
-     org
      plantuml
      ranger
      react
