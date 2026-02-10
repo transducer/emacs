@@ -43,6 +43,7 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
      better-defaults
+     (c-c++ :variables c-c++-enable-clang-support t)
      csharp
      chrome
      colors
@@ -56,6 +57,7 @@ This function should only modify configuration layer settings."
      emoji
      erlang
      ess
+     fountain
      git
      (go :variables go-backend 'lsp)
      graphviz
@@ -72,6 +74,7 @@ This function should only modify configuration layer settings."
      restclient
      ruby
      rust
+     semantic
      (shell :variables
             shell-default-height 30
             shell-default-shell 'ansi-term
@@ -84,11 +87,10 @@ This function should only modify configuration layer settings."
      sql
      syntax-checking
      (terraform :variables terraform-auto-format-on-save t)
-     version-control
-     yaml
-     emoji
-     (c-c++ :variables c-c++-enable-clang-support t)
-     semantic)
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+     yaml)
 
 
 
@@ -296,10 +298,14 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(doom-molokai
+                         ;; alabaster
+                         modus-operandi
+                         modus-vivendi
                          doom-peacock
                          doom-dracula
                          spacemacs-dark
                          spacemacs-light
+                         doom-one
                          doom-one-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -528,7 +534,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
    ;; (default '("rg" "ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("rg" "ag" "ack" "grep")
 
    ;; Format specification for setting the frame title.
    ;; %a - the `abbreviated-file-name', or `buffer-name'
@@ -647,6 +653,7 @@ It should only modify the values of Spacemacs settings."
    plantuml-java-command "java"
    plantuml-java-command "/opt/homebrew/opt/openjdk/bin/java"
    plantuml-jar-path "~/plantuml.jar"
+
    ))
 
 (defun dotspacemacs/user-env ()
@@ -735,8 +742,13 @@ before packages are loaded."
   (add-to-list 'auto-mode-alist '("\\.css$" . rainbow-mode))
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
   (add-to-list 'auto-mode-alist '("\\.sol$" . solidity-mode))
+  (add-to-list 'auto-mode-alist '("\\.ftl$" . html-mode))
   (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
   (add-to-list 'auto-mode-alist '("containers\\/.*\\.js\\'" . rjsx-mode))
+  (add-to-list 'auto-mode-alist '("\\.fountain$" . fountain-mode))
+  (setq fountain-export-command-profiles-default "afterwriting-a4pdf-doublespace")
+  (require 'dired-aux)
+  (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "open")))
   ;; (with-eval-after-load 'web-mode
   ;;   (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
   ;;   (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
@@ -906,7 +918,7 @@ This function is called at the very end of Spacemacs initialization."
                  company-statistics company-web company-ycmd compat consult
                  copilot cpp-auto-include csv-mode cython-mode dap-mode
                  define-word devdocs diminish dired-quick-sort disaster
-                 doom-themes dotenv-mode drag-stuff drupal-mode dumb-jump
+                 doom-themes dotenv-mode drag-stuff drupal-mode dumb-jump eca
                  edit-server editorconfig elisp-def elisp-slime-nav ellama
                  emmet-mode emoji-cheat-sheet-plus emojify emr erlang esh-help
                  eshell-prompt-extras eshell-z evil-anzu evil-args
@@ -919,26 +931,27 @@ This function is called at the very end of Spacemacs initialization."
                  expand-region eyebrowse fancy-battery flx-ido flycheck-clj-kondo
                  flycheck-elsa flycheck-package flycheck-pos-tip flycheck-rtags
                  flycheck-ycmd flymd flyspell-correct-helm flyspell-popup
-                 font-lock+ fuzzy geben gendoxy ggtags gh-md git-gutter-fringe
-                 git-link git-messenger git-modes git-timemachine
-                 gitignore-templates gmail-message-mode gntp gnuplot golden-ratio
-                 google-c-style google-translate gptel graphviz-dot-mode
-                 groovy-imports groovy-mode hcl-mode helm-c-yasnippet helm-cider
-                 helm-company helm-css-scss helm-descbinds helm-flx helm-git-grep
-                 helm-gtags helm-ls-git helm-lsp helm-make helm-mode-manager
-                 helm-org helm-org-rifle helm-projectile helm-purpose helm-pydoc
-                 helm-rtags helm-spotify-plus helm-swoop helm-themes helm-xref
-                 hide-comnt highlight-indentation highlight-numbers
-                 highlight-parentheses hl-todo hungry-delete hybrid-mode
-                 impatient-mode importmagic indent-guide info+ inspector js-doc
-                 js2-refactor json-mode json-navigator json-reformat keycast
-                 kubernetes-evil kubernetes-tramp languagetool link-hint
-                 live-py-mode livid-mode llm log4e lorem-ipsum lsp-docker lsp-java
-                 lsp-latex lsp-mode lsp-origami lsp-pyright lsp-python-ms
-                 lsp-treemacs lsp-ui macrostep markdown-toc maven-test-mode
-                 meghanada minitest mmm-mode multi-line multi-term mvn mwim
-                 nameless neotree nginx-mode nodejs-repl nose npm-mode ob-http
-                 ob-restclient omnisharp open-junk-file org-category-capture
+                 font-lock+ fountain-mode fuzzy geben gendoxy ggtags gh-md
+                 git-gutter-fringe git-link git-messenger git-modes
+                 git-timemachine gitignore-templates gmail-message-mode gntp
+                 gnuplot golden-ratio google-c-style google-translate gptel
+                 graphviz-dot-mode groovy-imports groovy-mode hcl-mode
+                 helm-c-yasnippet helm-cider helm-company helm-css-scss
+                 helm-descbinds helm-flx helm-git-grep helm-gtags helm-ls-git
+                 helm-lsp helm-make helm-mode-manager helm-org helm-org-rifle
+                 helm-projectile helm-purpose helm-pydoc helm-rtags
+                 helm-spotify-plus helm-swoop helm-themes helm-xref hide-comnt
+                 highlight-indentation highlight-numbers highlight-parentheses
+                 hl-todo hungry-delete hybrid-mode impatient-mode importmagic
+                 indent-guide info+ inspector js-doc js2-refactor json-mode
+                 json-navigator json-reformat keycast kubernetes-evil
+                 kubernetes-tramp languagetool link-hint live-py-mode livid-mode
+                 llm log4e lorem-ipsum lsp-docker lsp-java lsp-latex lsp-mode
+                 lsp-origami lsp-pyright lsp-python-ms lsp-treemacs lsp-ui
+                 macrostep markdown-toc maven-test-mode meghanada minitest
+                 mmm-mode multi-line multi-term mvn mwim nameless neotree
+                 nginx-mode nodejs-repl nose npm-mode ob-http ob-restclient
+                 olivetti omnisharp open-junk-file org-category-capture
                  org-cliplink org-contrib org-download org-mime org-pomodoro
                  org-present org-project-capture org-projectile org-ql
                  org-rich-yank org-sidebar org-super-agenda org-superstar orgit
